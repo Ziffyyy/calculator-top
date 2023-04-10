@@ -33,5 +33,3 @@ function operate(lastNumber, currentNumber, operator) {
     }
 
 }
-
-console.log(operate(2, 8, '/'));
