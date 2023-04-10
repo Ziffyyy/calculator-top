@@ -1,7 +1,16 @@
 let lastNumber;
 let currentNumber;
 let operator;
-//Make the basic operations for the calculator
+let displayValue = document.querySelector('#display');
+const digitButtons = document.querySelectorAll('.digit');
+
+digitButtons.forEach(button => {
+    const buttonText = button.textContent;
+    button.addEventListener('click', () => {
+        displayValue.textContent += buttonText;
+    });
+})
+
 function add(lastNumber, currentNumber) {
     return currentNumber = lastNumber + currentNumber;
 }
@@ -31,5 +40,7 @@ function operate(lastNumber, currentNumber, operator) {
         default:
             console.log('something went wrong...'); 
     }
-
 }
+
+
+console.log(displayValue)
