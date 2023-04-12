@@ -10,17 +10,33 @@ const eqButton = document.querySelector('#equal-operator');
 digitButtons.forEach(button => {
     const buttonText = button.textContent;
     button.addEventListener('click', () => {
-        displayValue.textContent += buttonText;
+        if (!hasOperatorBeenTriggered) {
+            if (displayValue.textContent == 0) {
+                displayValue.textContent = buttonText;
+            } else {
+                displayValue.textContent += buttonText;
+            }
+        } else {
+            displayValue.textContent = buttonText;
+            hasOperatorBeenTriggered = false;
+        }
     });
 })
 
 opButtons.forEach(button => {
     if (!hasOperatorBeenTriggered) {
         button.addEventListener('click', () => {
-            if (!(+displayValue.textContent == false)) {
+            if (!(+displayValue.textContent == false) &&
+                !lastNumber || !operator) {
                 lastNumber = +displayValue.textContent;
                 displayValue.textContent = '';
                 operator = button.textContent;
+                hasOperatorBeenTriggered = true;
+            } else {
+                currentNumber = +displayValue.textContent;
+                displayValue.textContent = operate(lastNumber, currentNumber, operator);
+                operator = button.textContent;
+                lastNumber = +displayValue.textContent;
                 hasOperatorBeenTriggered = true;
             }
         })
