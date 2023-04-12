@@ -6,6 +6,7 @@ let displayValue = document.querySelector('#display');
 const digitButtons = document.querySelectorAll('.digit');
 const opButtons = document.querySelectorAll('.operator');
 const eqButton = document.querySelector('#equal-operator');
+const clearButton = document.querySelector('#clear');
 
 digitButtons.forEach(button => {
     const buttonText = button.textContent;
@@ -19,6 +20,9 @@ digitButtons.forEach(button => {
         } else {
             displayValue.textContent = buttonText;
             hasOperatorBeenTriggered = false;
+            if (currentNumber === false) {
+                currentNumber = true;
+            }
         }
     });
 })
@@ -33,11 +37,16 @@ opButtons.forEach(button => {
                 operator = button.textContent;
                 hasOperatorBeenTriggered = true;
             } else {
-                currentNumber = +displayValue.textContent;
-                displayValue.textContent = operate(lastNumber, currentNumber, operator);
-                operator = button.textContent;
-                lastNumber = +displayValue.textContent;
-                hasOperatorBeenTriggered = true;
+                if (currentNumber !== false) {
+                    currentNumber = +displayValue.textContent;
+                    displayValue.textContent = operate(lastNumber, currentNumber, operator);
+                    operator = button.textContent;
+                    lastNumber = +displayValue.textContent;
+                    currentNumber = false;
+                    hasOperatorBeenTriggered = true;
+                } else {
+                    operator = button.textContent;
+                }
             }
         })
     }
@@ -49,6 +58,14 @@ eqButton.addEventListener('click', () => {
         displayValue.textContent = operate(lastNumber, currentNumber, operator);
         operator = null;
     }
+})
+
+clearButton.addEventListener('click', () => {
+    displayValue.textContent = 0;
+    hasOperatorBeenTriggered = false;
+    operator = null;
+    lastNumber = null;
+    currentNumber = null;
 })
 
 function add(lastNumber, currentNumber) {
