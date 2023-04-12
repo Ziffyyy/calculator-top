@@ -11,17 +11,19 @@ const clearButton = document.querySelector('#clear');
 digitButtons.forEach(button => {
     const buttonText = button.textContent;
     button.addEventListener('click', () => {
-        if (!hasOperatorBeenTriggered) {
-            if (displayValue.textContent == 0) {
-                displayValue.textContent = buttonText;
+        if (displayValue.textContent.length < 13) {
+            if (!hasOperatorBeenTriggered) {
+                if (displayValue.textContent == 0) {
+                    displayValue.textContent = buttonText;
+                } else {
+                    displayValue.textContent += buttonText;
+                }
             } else {
-                displayValue.textContent += buttonText;
-            }
-        } else {
-            displayValue.textContent = buttonText;
-            hasOperatorBeenTriggered = false;
-            if (currentNumber === false) {
-                currentNumber = true;
+                displayValue.textContent = buttonText;
+                hasOperatorBeenTriggered = false;
+                if (currentNumber === false) {
+                    currentNumber = true;
+                }
             }
         }
     });
@@ -44,6 +46,7 @@ opButtons.forEach(button => {
                     lastNumber = +displayValue.textContent;
                     currentNumber = false;
                     hasOperatorBeenTriggered = true;
+                    roundDecimals();
                 } else {
                     operator = button.textContent;
                 }
@@ -57,6 +60,7 @@ eqButton.addEventListener('click', () => {
         currentNumber = +displayValue.textContent;
         displayValue.textContent = operate(lastNumber, currentNumber, operator);
         operator = null;
+        roundDecimals();
     }
 })
 
@@ -99,5 +103,12 @@ function operate(lastNumber, currentNumber, operator) {
     }
 }
 
+function roundDecimals() {
+    const decimalPart = displayValue.textContent.split('.')[1];
+    const integerPart = displayValue.textContent.split('.')[0];
+    if (decimalPart && displayValue.textContent.length > 13) {
+        displayValue.textContent = (+displayValue.textContent).toFixed(10 - integerPart.length);
+    }
+}
 
 console.log(displayValue)
