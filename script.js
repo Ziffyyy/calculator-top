@@ -13,7 +13,9 @@ digitButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (displayValue.textContent.length < 13) {
             if (!hasOperatorBeenTriggered) {
-                if (displayValue.textContent == 0) {
+                if (displayValue.textContent == 0 ||
+                    displayValue.textContent == 'Stop' ||
+                    displayValue.textContent == 'Too big') {
                     displayValue.textContent = buttonText;
                 } else {
                     displayValue.textContent += buttonText;
@@ -46,7 +48,7 @@ opButtons.forEach(button => {
                     lastNumber = +displayValue.textContent;
                     currentNumber = false;
                     hasOperatorBeenTriggered = true;
-                    roundDecimals();
+                    roundValue();
                 } else {
                     operator = button.textContent;
                 }
@@ -60,7 +62,7 @@ eqButton.addEventListener('click', () => {
         currentNumber = +displayValue.textContent;
         displayValue.textContent = operate(lastNumber, currentNumber, operator);
         operator = null;
-        roundDecimals();
+        roundValue();
     }
 })
 
@@ -85,6 +87,9 @@ function multiply(lastNumber,currentNumber) {
 }
 
 function divide(lastNumber, currentNumber) {
+    if (currentNumber === 0) {
+        return 'Stop';
+    }
     return currentNumber = lastNumber / currentNumber;
 }
 
@@ -103,11 +108,13 @@ function operate(lastNumber, currentNumber, operator) {
     }
 }
 
-function roundDecimals() {
+function roundValue() {
     const decimalPart = displayValue.textContent.split('.')[1];
     const integerPart = displayValue.textContent.split('.')[0];
     if (decimalPart && displayValue.textContent.length > 13) {
         displayValue.textContent = (+displayValue.textContent).toFixed(10 - integerPart.length);
+    } else if (displayValue.textContent.length > 13) {
+        displayValue.textContent = 'Too big';
     }
 }
 
