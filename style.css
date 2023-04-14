@@ -1,51 +1,60 @@
+/* Set margin and padding to 0 for the body element */
 body {
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 48px;
     height: 75vh;
     background-color: #FEF9EF;
-}
-
-.calculator-container {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .calculator-container {
     padding: 32px;
     background: #2A2A26;
-}
-
-.other-buttons {
+  }
+  
+  .other-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    border: 2px solid black;
-}
-
-.calculator-table {
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .calculator-table {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    border: 2px solid black;
-}
-
-button {
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  button {
     font-size: 48px;
-}
-
-.digit {
+  }
+  
+  .digit {
     background-color: #F46036;
-}
-
-.operator,
-#equal-operator {
+  }
+  
+  .operator,
+  #equal-operator {
     background-color: #5B85AA;
-}
-
-.other-buttons > * {
+  }
+  
+  .other-buttons > * {
     background-color: #FFCB77;
-}
-
-#display {
+  }
+  
+  #display {
     border: 5px solid black;
     height: 1.2em;
     width: 320px;
     background-color: #FEF9EF;
-}
+    padding: 10px;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+  
