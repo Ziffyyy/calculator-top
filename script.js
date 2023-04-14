@@ -2,20 +2,23 @@ let lastNumber;
 let currentNumber;
 let operator;
 let hasOperatorBeenTriggered = false;
+let isNumberAnInteger = true;
 let displayValue = document.querySelector('#display');
 const digitButtons = document.querySelectorAll('.digit');
 const opButtons = document.querySelectorAll('.operator');
 const eqButton = document.querySelector('#equal-operator');
 const clearButton = document.querySelector('#clear');
+const dotButton = document.querySelector('#decimal');
+const delButton = document.querySelector('#backspace');
 
 digitButtons.forEach(button => {
     const buttonText = button.textContent;
     button.addEventListener('click', () => {
         if (displayValue.textContent.length < 13) {
             if (!hasOperatorBeenTriggered) {
-                if (displayValue.textContent == 0 ||
-                    displayValue.textContent == 'Stop' ||
-                    displayValue.textContent == 'Too big') {
+                if (displayValue.textContent === '0' ||
+                    displayValue.textContent === 'Stop' ||
+                    displayValue.textContent === 'Too big') {
                     displayValue.textContent = buttonText;
                 } else {
                     displayValue.textContent += buttonText;
@@ -74,6 +77,19 @@ clearButton.addEventListener('click', () => {
     currentNumber = null;
 })
 
+dotButton.addEventListener('click', () => {
+    if (!displayValue.textContent.includes('.') &&
+        displayValue.textContent !== '') {
+        displayValue.textContent += '.'
+    }
+})
+
+delButton.addEventListener('click', () => {
+    if (displayValue.textContent !== '0') {
+        displayValue.textContent = displayValue.textContent.slice(0, -1);
+    }
+})
+
 function add(lastNumber, currentNumber) {
     return currentNumber = lastNumber + currentNumber;
 }
@@ -117,5 +133,3 @@ function roundValue() {
         displayValue.textContent = 'Too big';
     }
 }
-
-console.log(displayValue)
