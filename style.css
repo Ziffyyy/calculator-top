@@ -14,6 +14,7 @@ body {
   .calculator-container {
     padding: 32px;
     background: #2A2A26;
+    border: 5px solid black;
   }
   
   .other-buttons {
